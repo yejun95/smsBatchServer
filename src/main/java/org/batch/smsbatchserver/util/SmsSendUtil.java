@@ -54,21 +54,21 @@ public class SmsSendUtil {
         return String.valueOf(randomNumber);
     }
 
-    public ResponseEntity<?> sendOne() {
+    public ResponseEntity<?> sendOne(int num) {
         String numberKey = createNumberKey();
 
         Message message = new Message();
 
-        message.setFrom("01042139191");
-        message.setTo("01042139191");
-        message.setText("테스트 sms api 랜덤값: " + numberKey);
+        message.setFrom("");
+        message.setTo("");
+        message.setText(num + "번째 테스트 sms api 랜덤값: " + numberKey);
 
         SingleMessageSentResponse r = this.messageService.sendOne(new SingleMessageSendingRequest(message));
 
         SmsLog smsLog = SmsLog.builder()
                 .groupId(r.getGroupId())
-                .from(r.getFrom())
-                .to(r.getTo())
+                .fromSMS(r.getFrom())
+                .toSMS(r.getTo())
                 .type(r.getType())
                 .statusMessage(r.getStatusMessage())
                 .country(r.getCountry())
@@ -77,7 +77,9 @@ public class SmsSendUtil {
                 .regDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .build();
 
-        return ResponseEntity.ok("전송 완료!!");
+        smsRepository.save(smsLog);
+
+        return ResponseEntity.ok(num + "번째 전송 완료!!");
     }
 
 
