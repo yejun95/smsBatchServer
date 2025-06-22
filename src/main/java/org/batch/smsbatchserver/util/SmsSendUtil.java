@@ -59,8 +59,8 @@ public class SmsSendUtil {
 
         Message message = new Message();
 
-        message.setFrom("");
-        message.setTo("");
+        message.setFrom("01042139191");
+        message.setTo("01042139191");
         message.setText(num + "번째 테스트 sms api 랜덤값: " + numberKey);
 
         SingleMessageSentResponse r = this.messageService.sendOne(new SingleMessageSendingRequest(message));
@@ -78,7 +78,7 @@ public class SmsSendUtil {
                 .build();
 
         smsRepository.save(smsLog);
-
+        log.info(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "-> " + smsLog.getFromSMS() + "에서 " + smsLog.getToSMS() + "로 " + num + "번째 전송 완료");
         return ResponseEntity.ok(num + "번째 전송 완료!!");
     }
 
