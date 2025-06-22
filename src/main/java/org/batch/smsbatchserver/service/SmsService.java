@@ -27,7 +27,7 @@ public class SmsService {
     public void startSendSMS() {
         ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
 
-        for (int i = 1; i <= 1; i++) {
+        for (int i = 1; i <= threadCount; i++) {
             final int num = i;
             executorService.submit(() -> smsSendUtil.sendOne(num));
         }
