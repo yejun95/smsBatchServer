@@ -16,7 +16,7 @@ public class SmsService {
 
     private final SmsSendUtil smsSendUtil;
 
-    private final int threadCount = 3;
+    int threadCount = 3;
 
     public SmsService(SmsSendUtil smsSendUtil) {
         this.smsSendUtil = smsSendUtil;
